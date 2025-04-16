@@ -1,5 +1,6 @@
 import oscP5.*;
 import netP5.*;
+import codeanticode.syphon.*;  // Syphon lib for Processing
 
 final int CANVAS_W = 800, CANVAS_H = 600;
 final int TITLE_TIME   = 3000;  
@@ -74,6 +75,9 @@ void setup() {
   bowImg    = loadImage("bow_array.png");
   tazerImg  = loadImage("phased_array_lazer.png");
   LRADImg   = loadImage("LRAD.png");
+
+  // init Syphon server with name
+  syphonServer = new SyphonServer(this, "Processing Output");
   
   // Start with the intro
   introStart = millis();
@@ -97,6 +101,7 @@ void draw() {
   updateWorld(dt);
   renderWorld();
   sendOSC();
+  syphonServer.sendScreen();
 }
 
 // OSC communication
